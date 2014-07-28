@@ -1,4 +1,6 @@
-podingcast_webservice
+Podingcast Webservice
 =====================
 
-Python Webservice to supply applications with data. Uses MongoDB as store mechanism.
+Python Webservice to supply applications with data. Build with:
+* web.py 
+* MongoDB
