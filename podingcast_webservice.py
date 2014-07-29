@@ -1,5 +1,6 @@
 import web
 from database import Database
+import json
 
 urls = (
     '/podcasts', 'get_podcasts',
@@ -9,11 +10,21 @@ urls = (
 
 class get_podcasts:
 	def GET(self):
-		return "Just testing..."
+		podcasts = {}
+		with Database("localhost", 27017) as database:
+			podcasts = database.get_podcasts()
+
+		web.header('Content-Type', 'application/json')
+		return json.dumps(podcasts)
 
 class get_podcast_by_name:
 	def GET(self, podcast_name):
-		return "Just testing (" + podcast_name + ")..."
+		podcasts = {}
+		with Database("localhost", 27017) as database:
+			podcasts = database.get_podcast(podcast_name)
+			
+		web.header('Content-Type', 'application/json')
+		return json.dumps(podcasts)
 
 class save_podcast:
 	def GET(self, podcast_name):
