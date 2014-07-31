@@ -5,7 +5,8 @@ import json
 urls = (
     '/podcasts', 'get_podcasts',
     '/podcasts/(.*)', 'get_podcast_by_name',
-    '/save_podcast/(.*)', 'save_podcast'
+    '/save_podcast/(.*)', 'save_podcast',
+    '/save_podcast', 'save_podcast'
 )
 
 class get_podcasts:
@@ -27,16 +28,15 @@ class get_podcast_by_name:
 		return json.dumps(podcasts)
 
 class save_podcast:
-	def GET(self, podcast_name):
-		self.new_podcast(podcast_name)
-		return "OK"
+	def POST(self):
+		json_podcast = web.data()
+		podcast = json.loads(json_podcast)
 
-	def new_podcast(self, podcast_name):
-		podcast = { 
-			"name": podcast_name 
-		}
 		with Database("localhost", 27017) as database:
 			database.insert_podcast(podcast)
+
+		web.header('Content-Type', 'text/plain')
+		return "OK"
 
 if __name__ == "__main__":
 	app = web.application(urls, globals())

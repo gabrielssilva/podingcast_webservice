@@ -24,7 +24,7 @@ class Database:
 		return all_podcasts
 
 	def get_podcast(self, name):
-		cursor = self.podcasts.find({"name": {"$regex": name}})
+		cursor = self.podcasts.find({"podcast_name": {"$regex": name}})
 		podcasts = self.cursor_to_array(cursor)
 		return podcasts
 
